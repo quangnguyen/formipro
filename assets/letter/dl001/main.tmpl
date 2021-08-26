@@ -1,0 +1,177 @@
+% Briefvorlage für Privatleute
+% Ersteller: Alexey Abel
+% GoTemplate: Quang Nguyen
+% Git-Repository: https://github.com/PanCakeConnaisseur/latex-briefvorlage-din-5008
+% Basiert auf KOMA-Scripts scrlttr2
+
+\documentclass[
+	% Schriftgröße
+	fontsize=11pt,
+	%
+	% zwischen Absätzen eine leere Zeile einfügen, statt lediglich Einrückung
+	parskip=full,
+	%
+	% Papierformat auf DIN-A4
+	paper=A4,
+	%
+	% Briefkopf (ganz oben) rechts ausrichten, standardmäßig links
+	fromalign=right,
+	%
+	% Telefonnummer im Briefkopf anzeigen
+	#( if .Sender.Phone )#fromphone=true,#(else)#fromphone=false,#(end)#
+	%
+	% Faxnnummer im Briefkopf anzeigen
+	%fromfax=true,
+	%
+	% E-Mail-Adresse im Briefkopf anzeigen
+	#( if .Sender.Email )#fromemail=true,#(else)#fromemail=false,#(end)#
+	%
+	% URL im Briefkopf anzeigen
+	%fromurl=true,
+	%
+	% Faltmarkierungen verbergen
+	%foldmarks=false,
+	%
+	% Die neuste Version von scrlettr2 verwenden
+	version=last,
+]{scrlttr2}
+
+% Zeichenkodierung des Dokuments ist in UTF-8
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Strike words
+\usepackage{ulem}
+
+\usepackage{mathtools}
+
+% Eurosymbol-Unterstützung
+\usepackage{eurosym}
+% Das Unicode-Zeichen € als \euro interpretieren.
+% So kann man direkt € tippen anstatt jedes Mal \euro auszuschreiben.
+\DeclareUnicodeCharacter{20AC}{\euro}
+
+% Sprache des Dokuments auf Deutsch
+\usepackage[english,ngerman]{babel}
+% \usepackage[ngerman, vietnamese]{babel}
+% \AtBeginDocument{\selectlanguage{english}}
+
+#( if eq .Language "en" )#\AtBeginDocument{\selectlanguage{english}} #( end -)#
+#( if eq .Language "de" )#\AtBeginDocument{\selectlanguage{ngerman}} #( end -)#
+
+#( if not .Language )# \AtBeginDocument{\selectlanguage{ngerman}} #( end -)#
+
+% Includen von PDFs nach dem Brief, siehe \includepdf unten
+\usepackage{pdfpages}
+
+% klickbare Links und E-Mail-Adressen. Paket url kann keine klickbaren,
+% deswegen hyperref. Option hidelinks versteckt farbigen Rahmen.
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{graphicx}
+
+\begin{document}
+% Abstand zwischen Schlussgruß und Name vergrößern (alle drei Zeilen auskommentieren)
+\makeatletter
+\@setplength{sigbeforevskip}{5em}
+#( if not .OpeningText )#\@setplength{subjectaftervskip}{1em}#(- end -)#
+\makeatother
+
+% Name nach Schlussgruß (unter Unterschrift) nicht nach rechts einrücken
+%\renewcommand*{\raggedsignature}{\raggedright}
+
+
+% Absendername
+\setkomavar{fromname}{#(if .Sender.Firstname)##(.Sender.Firstname)# #(end)##(.Sender.Lastname)#}
+
+% Absenderadresse
+\setkomavar{fromaddress}{
+#( if .Sender.Street )##( .Sender.Street )# #(- end -)#
+#( if .Sender.Zipcode )##( .Sender.Zipcode )# #(- end -)#
+#( if .Sender.City )##( .Sender.City )# #(- end -)#
+}
+
+% Absendertelefonnummer
+\setkomavar{fromphone}{#(.Sender.Phone)#}
+
+% Absenderfax
+% (oben fromfax=true setzen)
+%\setkomavar{fromfax}{}
+
+% Absender-E-Mail-Adresse
+% der erste Paremeter ist fürs Klicken, der zweite wird angezeigt/gedruckt
+\setkomavar{fromemail}{\href{mailto:#(.Sender.Email)#}{#(.Sender.Email)#}}
+
+% Absender-URL
+% (oben fromurl=true setzen)
+% eckige Klammern entfernen damit "URL:" erscheint oder dort Alternativtext eintragen
+% der erste Parameter ist fürs Klicken, der zweite wird angezeigt/gedruckt
+\setkomavar{fromurl}[]{\href{http://cloud.com}{cloud.com}}
+
+
+
+% Ort beim Datum
+\setkomavar{place}{#( .Sender.City )#}
+
+% Datum
+\setkomavar{date}{\today}
+
+% Betreff
+\setkomavar{subject}{#( .Title )#}
+
+
+% Kundennummer
+#( if .Reference.CustomerId )#\setkomavar{customer}[\customername]{#( .Reference.CustomerId )#} #( end )#
+
+% Ihr Zeichen
+#( if .Reference.Id )#\setkomavar{yourref}[\yourrefname]{#( .Reference.Id )#} #( end )#
+
+% Ihr Schreiben vom
+#( if .Reference.MailDate )#\setkomavar{yourmail}[\yourmailname]{#( .Reference.MailDate )#} #( end )#
+
+\begin{letter}{
+	#( if .Receiver.Name )# #( .Receiver.Name )#\\ #( end )#
+	#( if .Receiver.Street )# #( .Receiver.Street )#\\ #( end )#
+    #( if .Receiver.Zipcode )# #( .Receiver.Zipcode )# #( end )#
+    #( if .Receiver.City )# #( .Receiver.City )#\\ #( end )#
+    #( if .Receiver.Country )# #( .Receiver.Country )# #( end )#
+}
+
+\opening{#( .OpeningText )#}
+
+#( .MainContent.Tex )#
+
+\renewcommand\raggedsignature{\raggedright}
+\closing{#( .ClosingText )#}
+
+% Post Scriptum
+%\ps PS: Ich bin bis März nur telefonisch erreichbar.
+
+% Anlage(n)
+% Standardmäßig wird "Anlage(n)" eingefügt, dies kann überschrieben werden, hier mit "Anlagen"
+%\setkomavar*{enclseparator}{Anlagen}
+%\encl{Kopie des Ausweises}
+
+% Verteiler
+%\cc{Bürgermeister, Vereinsvorsitzender}
+
+\end{letter}
+
+#( range $key, $value := .Attachments )#
+\includepdf[pages=-,openright]{#($key)#}
+#( end )#
+
+% Weitere PDFs können automatisch angefügt werden, z.B. Ahnänge.
+%\includepdf[pages=-,openright]{pfad/zu/weiteren/pdfs/dokument.pdf}
+% Pfad ist relativ zu dieser tex-Datei. Mit .. ein Verzeichnis hoch.
+% Der pages-Parameter spezifiziert welche Seiten eingefügt werden.
+% Beispiele:
+% pages=-				alle Seiten
+% pages={1-4}			Seite 1-4
+% pages={1,4,5}			Seite 1, 4 und 5
+% pages={3,{},8-11,15}	Seite 3, leere Seite, Seite 8-11 und Seite 15
+% Der openright-Parameter startet die Anlagen auf ungerader (rechter) Seite, d.h. notfalls wird eine leere Seite
+% eingefügt. Im doppelseitigem Druck wird dadurch besser zwischen Brief und Anlage getrennt. Für einseitigen Druck
+% entfernen.
+
+\end{document}
