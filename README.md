@@ -1,8 +1,8 @@
 # formipro
 
-EN - Docker container for creating pdf letters in german standard DIN A4.
+EN - A tool for creating pdf letters in standard DIN A4.
 
-DE - Docker-Container zum Erstellen von PDF-Briefen in deutschen Standard DIN A4.
+DE - Ein Tool zum Erstellen von PDF-Briefen in Standard DIN A4.
 
 ### How to use?
 
@@ -28,11 +28,7 @@ docker pull nguyen99/formipro:latest
 
 ## Stack
 
-+ Frontend
++ Frontend (Not public for now)
   + Vue 3, Typescript
 + Backend
   + Golang, Latex
-
-## Source code
-
-Comming soon
