@@ -30,10 +30,11 @@ docker pull nguyen99/formipro:latest
 
 ## Stack
 
-  + Frontend (Not public for now)
++ Frontend (Not public for now)
 
-    + Vue 3, Typescript
+  + Vue 3, Typescript
   
-  + Backend
 
-    + Golang, Latex
++ Backend
+
+  + Golang, Latex
