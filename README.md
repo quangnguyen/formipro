@@ -6,7 +6,7 @@ EN - A tool for creating pdf letters in standard DIN A4.
 
 DE - Ein Tool zum Erstellen von PDF-Briefen in Standard DIN A4.
 
-### How to use?
+## How to use?
 
 Start a docker container with following command:
 
@@ -16,7 +16,7 @@ docker run -p 22222:22222 -d nguyen99/formipro:latest
 
 Open web browser with address http://localhost:22222 and go ahead.
 
-### How to upgrade to new version?
+## How to upgrade to new version?
 
 Pull latest version of formipro
 
