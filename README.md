@@ -1,5 +1,7 @@
 # formipro
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d62ab6c07a4f4ee8b457ecc9f98a8ed5)](https://app.codacy.com/gh/quangnguyen/formipro?utm_source=github.com&utm_medium=referral&utm_content=quangnguyen/formipro&utm_campaign=Badge_Grade_Settings)
+
 EN - A tool for creating pdf letters in standard DIN A4.
 
 DE - Ein Tool zum Erstellen von PDF-Briefen in Standard DIN A4.
