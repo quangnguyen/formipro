@@ -11,7 +11,7 @@ RUN go get -v -t .
 RUN go build -o app
 
 # App image ####################################################################
-FROM nguyen99/alpine-latex:latest
+FROM nguyen99/alpine-latex:20211018180404
 
 COPY --from=pandoc-builder \
   /usr/local/bin/pandoc \
