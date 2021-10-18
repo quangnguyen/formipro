@@ -86,8 +86,8 @@
 
 % Absenderadresse
 \setkomavar{fromaddress}{
-#( if .Sender.Street )##( .Sender.Street )# #(- end -)#
-#( if .Sender.Zipcode )##( .Sender.Zipcode )# #(- end -)#
+#( if .Sender.Street )##( .Sender.Street )#\\#(- end -)#
+#( if .Sender.Zipcode )##( .Sender.Zipcode )# #(- end )#
 #( if .Sender.City )##( .Sender.City )# #(- end -)#
 }
 
