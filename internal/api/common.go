@@ -21,7 +21,7 @@ func WriteResponse(w http.ResponseWriter, model model.Model) {
 		return
 	}
 
-	pwd, err := pdfGenerator.GeneratePdf(model.GetTemplateId(), model)
+	pwd, err := pdfGenerator.GeneratePdf(model.GetTemplateID(), model)
 	if err != nil {
 		http.Error(w, "Some thing wrong happened!", http.StatusInternalServerError)
 		return

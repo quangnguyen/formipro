@@ -15,11 +15,11 @@ import (
 
 const texTemplate = "main.tmpl"
 
-func GeneratePdf(templateId string, model model.Model) ([]byte, error) {
+func GeneratePdf(templateID string, model model.Model) ([]byte, error) {
 	newDirName, _ := RandDir()
 
 	workDir := filepath.Join(internal.TmpDir, newDirName)
-	err := file.CopyFiles(filepath.Join("assets/"+model.Name(), templateId), workDir)
+	err := file.CopyFiles(filepath.Join("assets/"+model.Name(), templateID), workDir)
 	defer os.Rename(workDir, workDir+"_processed")
 
 	attachments := model.GetAttachments()

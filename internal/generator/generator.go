@@ -6,7 +6,7 @@ import (
 )
 
 type Generator interface {
-	GeneratePdf(templateId string, obj interface{}) ([]byte, error)
+	GeneratePdf(templateID string, obj interface{}) ([]byte, error)
 }
 
 func NewGenerator(obj interface{}) (Generator, error) {

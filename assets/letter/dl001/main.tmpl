@@ -121,10 +121,10 @@
 
 
 % Kundennummer
-#( if .Reference.CustomerId )#\setkomavar{customer}[\customername]{#( .Reference.CustomerId )#} #( end )#
+#( if .Reference.CustomerID )#\setkomavar{customer}[\customername]{#( .Reference.CustomerID )#} #( end )#
 
 % Ihr Zeichen
-#( if .Reference.Id )#\setkomavar{yourref}[\yourrefname]{#( .Reference.Id )#} #( end )#
+#( if .Reference.ID )#\setkomavar{yourref}[\yourrefname]{#( .Reference.ID )#} #( end )#
 
 % Ihr Schreiben vom
 #( if .Reference.MailDate )#\setkomavar{yourmail}[\yourmailname]{#( .Reference.MailDate )#} #( end )#

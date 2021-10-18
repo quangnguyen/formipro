@@ -2,6 +2,6 @@ package model
 
 type Model interface {
 	Name() string
-	GetTemplateId() string
+	GetTemplateID() string
 	GetAttachments() map[string][]byte
 }

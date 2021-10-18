@@ -4,8 +4,8 @@ func (l Letter) Name() string {
 	return "letter"
 }
 
-func (l Letter) GetTemplateId() string {
-	return l.TemplateId
+func (l Letter) GetTemplateID() string {
+	return l.TemplateID
 }
 
 func (l Letter) GetAttachments() map[string][]byte {
@@ -32,13 +32,13 @@ type Receiver struct {
 }
 
 type Reference struct {
-	Id         string `json:"id"`
-	CustomerId string `json:"customerId"`
+	ID         string `json:"ID"`
+	CustomerID string `json:"customerID"`
 	MailDate   string `json:"mailDate"`
 }
 
 type Letter struct {
-	TemplateId  string      `json:"templateId"`
+	TemplateID  string      `json:"templateID"`
 	Sender      Sender      `json:"sender"`
 	Receiver    Receiver    `json:"receiver"`
 	Reference   Reference   `json:"reference"`

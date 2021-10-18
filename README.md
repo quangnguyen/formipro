@@ -2,9 +2,9 @@
 
 # formipro
 
-EN - A tool for creating pdf letters in standard DIN A4.
+**EN** - A tool for creating pdf letters in standard DIN A4.
 
-DE - Ein Tool zum Erstellen von PDF-Briefen in Standard DIN A4.
+**DE** - Ein Tool zum Erstellen von PDF-Briefen in Standard DIN A4.
 
 ## How to use
 
@@ -29,12 +29,6 @@ docker pull nguyen99/formipro:latest
 ![DIN A4 Letter](DINA4Letter.png "DIN A4 Letter")
 
 ## Stack
+**Frontend**: Vue 3, Typescript(not public for now)
 
-+ Frontend (Not public for now)
-
-  + Vue 3, Typescript
-  
-
-+ Backend
-
-  + Golang, Latex
+**Backend**: Golang, Latex

@@ -8,7 +8,7 @@ import (
 
 func TestGeneratePdf(t *testing.T) {
 	type args struct {
-		templateId string
+		templateID string
 		model      model.Model
 	}
 	tests := []struct {
@@ -21,7 +21,7 @@ func TestGeneratePdf(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GeneratePdf(tt.args.templateId, tt.args.model)
+			got, err := GeneratePdf(tt.args.templateID, tt.args.model)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GeneratePdf() error = %v, wantErr %v", err, tt.wantErr)
 				return

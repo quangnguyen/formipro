@@ -8,26 +8,26 @@ import (
 type LetterGenerator struct {
 }
 
-func letterPdf(templateId string, letter *model.Letter) ([]byte, error) {
+func letterPdf(templateID string, letter *model.Letter) ([]byte, error) {
 	replaceSpecialCharacters(letter)
 	tex, err := HtmlToLatex(letter.MainContent.HTML)
 	if err != nil {
 		return []byte{}, err
 	}
 	letter.MainContent.Tex = tex
-	return GeneratePdf(templateId, letter)
+	return GeneratePdf(templateID, letter)
 }
 
 func replaceSpecialCharacters(letter *model.Letter) {
-	letter.Reference.CustomerId = internal.ReplaceToTex(letter.Reference.CustomerId)
-	letter.Reference.Id = internal.ReplaceToTex(letter.Reference.Id)
+	letter.Reference.CustomerID = internal.ReplaceToTex(letter.Reference.CustomerID)
+	letter.Reference.ID = internal.ReplaceToTex(letter.Reference.ID)
 	letter.Reference.MailDate = internal.ReplaceToTex(letter.Reference.MailDate)
 	letter.Title = internal.ReplaceToTex(letter.Title)
 	letter.OpeningText = internal.ReplaceToTex(letter.OpeningText)
 	letter.ClosingText = internal.ReplaceToTex(letter.ClosingText)
 }
 
-func (l LetterGenerator) GeneratePdf(templateId string, obj interface{}) ([]byte, error) {
+func (l LetterGenerator) GeneratePdf(templateID string, obj interface{}) ([]byte, error) {
 	letter := obj.(model.Letter)
-	return letterPdf(templateId, &letter)
+	return letterPdf(templateID, &letter)
 }
