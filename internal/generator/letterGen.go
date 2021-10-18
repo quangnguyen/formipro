@@ -10,7 +10,7 @@ type LetterGenerator struct {
 
 func letterPdf(templateID string, letter *model.Letter) ([]byte, error) {
 	replaceSpecialCharacters(letter)
-	tex, err := HtmlToLatex(letter.MainContent.HTML)
+	tex, err := HTMLToLatex(letter.MainContent.HTML)
 	if err != nil {
 		return []byte{}, err
 	}

@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-const FormLetterContentJson = "content"
+const ContentJSON = "content"
 const FormAttachment = "attachments"
 
 func Letter(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +24,7 @@ func Letter(w http.ResponseWriter, r *http.Request) {
 
 func FormLetter(w http.ResponseWriter, r *http.Request) {
 	var letter model.Letter
-	content := r.FormValue(FormLetterContentJson)
+	content := r.FormValue(ContentJSON)
 	if content == "" {
 		http.Error(w, "Expected letter content from multipart form not found.", http.StatusBadRequest)
 		return

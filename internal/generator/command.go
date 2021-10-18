@@ -107,7 +107,7 @@ func fillData(templateDir string, texFileName string, obj interface{}) error {
 	return nil
 }
 
-func HtmlToLatex(input string) (string, error) {
+func HTMLToLatex(input string) (string, error) {
 	cmdString := "echo \"" + input + "\" | pandoc -f html -t latex"
 	cmd := exec.Command("sh", "-c", cmdString)
 	out, err := cmd.Output()
