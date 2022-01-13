@@ -1,8 +1,8 @@
-FROM pandoc/core:2.14.1 as pandoc-builder
+FROM pandoc/core:2.17.0 as pandoc-builder
 
 # Backend build ################################################################
 # https://hub.docker.com/_/golang
-FROM golang:1.17.0-alpine3.14 as backend-builder
+FROM golang:1.17.6-alpine3.15 as backend-builder
 
 RUN apk add --no-cache git
 WORKDIR /go/src/com.nguyenonline/formipro
