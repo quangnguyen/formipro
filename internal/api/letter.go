@@ -41,7 +41,7 @@ func FormLetter(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	WriteResponse(w, letter)
+	WriteResponse(w, &letter)
 }
 
 func attachment(r *http.Request, letter *model.Letter) error {
@@ -53,18 +53,18 @@ func attachment(r *http.Request, letter *model.Letter) error {
 			return err
 		}
 
-		bytes := bytes.NewBuffer(nil)
-		if _, err := io.Copy(bytes, f); err != nil {
+		bytesBuffer := bytes.NewBuffer(nil)
+		if _, err := io.Copy(bytesBuffer, f); err != nil {
 			return err
 		}
 
-		mimeType := http.DetectContentType(bytes.Bytes())
+		mimeType := http.DetectContentType(bytesBuffer.Bytes())
 
 		if mimeType != "application/pdf" {
 			return errors.New("attachment must be pdf")
 		}
 
-		letter.Attachments[att.Filename] = bytes.Bytes()
+		letter.Attachments[att.Filename] = bytesBuffer.Bytes()
 	}
 	return nil
 }

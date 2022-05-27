@@ -1,9 +1,9 @@
 package generator
 
 import (
-	"com.nguyenonline/formipro/internal"
 	"com.nguyenonline/formipro/pkg/file"
 	"com.nguyenonline/formipro/pkg/model"
+	"com.nguyenonline/formipro/util"
 	"io/ioutil"
 	"log"
 	"os"
@@ -15,14 +15,24 @@ import (
 
 const texTemplate = "main.tmpl"
 
-func GeneratePdf(templateID string, model model.Model) ([]byte, error) {
-	newDirName, _ := RandDir()
+func PdfLatex(templateID string, m model.Model) ([]byte, error) {
+	newDirName, _ := util.RandDir()
 
-	workDir := filepath.Join(internal.TmpDir, newDirName)
-	err := file.CopyFiles(filepath.Join("assets/"+model.Name(), templateID), workDir)
-	defer os.Rename(workDir, workDir+"_processed")
+	workDir := filepath.Join("tmp", newDirName)
+	defer func(oldPath, newPath string) {
+		err := os.Rename(oldPath, newPath)
+		if err != nil {
+			log.Println(err)
+		}
+	}(workDir, workDir+"_processed")
 
-	attachments := model.GetAttachments()
+	err := file.CopyFiles(filepath.Join("assets/"+m.Name(), templateID), workDir)
+	if err != nil {
+		log.Printf("Could not copy files, error is '%s'\n", err)
+		return nil, err
+	}
+
+	attachments := m.GetAttachments()
 	for attachmentName, attachmentBytes := range attachments {
 		err = createFile(workDir, attachmentName, attachmentBytes)
 		if err != nil {
@@ -30,14 +40,9 @@ func GeneratePdf(templateID string, model model.Model) ([]byte, error) {
 		}
 	}
 
-	if err != nil {
-		log.Printf("Could not copy files, error is '%s'\n", err)
-		return nil, err
-	}
+	texFileName := m.Name() + ".tex"
 
-	texFileName := model.Name() + ".tex"
-
-	err = fillData(workDir, texFileName, model)
+	err = fillData(workDir, texFileName, m)
 	if err != nil {
 		log.Printf("Could not fill data in to placeholder, error is '%s'\n", err)
 		return nil, err
@@ -49,7 +54,7 @@ func GeneratePdf(templateID string, model model.Model) ([]byte, error) {
 		return nil, err
 	}
 
-	bytes, err := readFile(workDir, model.Name()+".pdf")
+	bytes, err := readFile(workDir, m.Name()+".Pdf")
 	if err != nil {
 		return nil, err
 	}
@@ -58,7 +63,12 @@ func GeneratePdf(templateID string, model model.Model) ([]byte, error) {
 
 func createFile(directoryName string, fileName string, bytes []byte) error {
 	attachmentFile, err := os.Create(filepath.Join(directoryName, fileName))
-	defer attachmentFile.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+			log.Println(err)
+		}
+	}(attachmentFile)
 	if err != nil {
 		return err
 	}
@@ -94,7 +104,12 @@ func fillData(templateDir string, texFileName string, obj interface{}) error {
 
 	texFile, err := os.Create(filepath.Join(dir, templateDir, texFileName))
 	if texFile != nil {
-		defer texFile.Close()
+		defer func(f *os.File) {
+			err := f.Close()
+			if err != nil {
+				log.Println(err)
+			}
+		}(texFile)
 	}
 	if err != nil {
 		return err

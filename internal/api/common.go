@@ -7,27 +7,27 @@ import (
 	"net/http"
 )
 
-func DecodeModel(request *http.Request, model model.Model) error {
-	decoder := json.NewDecoder(request.Body)
+func DecodeModel(r *http.Request, m model.Model) error {
+	decoder := json.NewDecoder(r.Body)
 	decoder.DisallowUnknownFields()
-	err := decoder.Decode(&model)
+	err := decoder.Decode(&m)
 	return err
 }
 
-func WriteResponse(w http.ResponseWriter, model model.Model) {
-	pdfGenerator, err := generator.NewGenerator(model)
+func WriteResponse(w http.ResponseWriter, m model.Model) {
+	g, err := generator.New(m)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
-	pwd, err := pdfGenerator.GeneratePdf(model.GetTemplateID(), model)
+	bytes, err := g.Pdf(m.GetTemplateID(), m)
 	if err != nil {
 		http.Error(w, "Some thing wrong happened!", http.StatusInternalServerError)
 		return
 	}
 
-	_, err = w.Write(pwd)
+	_, err = w.Write(bytes)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 	}

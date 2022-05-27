@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-func ReplaceToTex(text string) string {
+func ReplaceSpecialCharWithTexSymbol(text string) string {
 	r := strings.NewReplacer("_", "\\_",
 		"%", "\\%",
 		"#", "\\#",

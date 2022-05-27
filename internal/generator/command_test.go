@@ -21,13 +21,13 @@ func TestGeneratePdf(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GeneratePdf(tt.args.templateID, tt.args.model)
+			got, err := PdfLatex(tt.args.templateID, tt.args.model)
 			if (err != nil) != tt.wantErr {
-				t.Errorf("GeneratePdf() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Pdf() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("GeneratePdf() got = %v, want %v", got, tt.want)
+				t.Errorf("Pdf() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -97,7 +97,7 @@ func Test_HtmlToLatex(t *testing.T) {
 		{"Paragraph", args{"<p>Hello</p>"}, "Hello", false},
 		{"Italic", args{"<i>Hello</i>"}, "\\emph{Hello}", false},
 		{"Italic and bold", args{"<i>Hello <b>World</b></i>"}, "\\emph{Hello \\textbf{World}}", false},
-		{"Italic and bold", args{"<u>All</u>"}, "\\underline{All}", false},
+		{"Italic and bold", args{"<u>All</u>"}, "\\uline{All}", false},
 		{"Special characters", args{"<p>~!@#$%^&*()_+-=[]{};:'<>,.</p>"}, "\\textasciitilde!@\\#\\$\\%\\^{}\\&*()\\_+-={[}{]}\\{\\};:'\\textless\\textgreater,.", false},
 	}
 

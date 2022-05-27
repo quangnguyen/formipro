@@ -6,10 +6,10 @@ import (
 )
 
 type Generator interface {
-	GeneratePdf(templateID string, obj interface{}) ([]byte, error)
+	Pdf(templateID string, obj interface{}) ([]byte, error)
 }
 
-func NewGenerator(obj interface{}) (Generator, error) {
+func New(obj interface{}) (Generator, error) {
 	_, ok := obj.(model.Letter)
 	if ok {
 		return LetterGenerator{}, nil
