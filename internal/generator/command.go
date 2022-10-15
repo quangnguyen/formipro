@@ -4,7 +4,6 @@ import (
 	"com.nguyenonline/formipro/pkg/file"
 	"com.nguyenonline/formipro/pkg/model"
 	"com.nguyenonline/formipro/util"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -72,7 +71,7 @@ func createFile(directoryName string, fileName string, bytes []byte) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(attachmentFile.Name(), bytes, 0644)
+	err = os.WriteFile(attachmentFile.Name(), bytes, 0644)
 	return err
 }
 
@@ -87,7 +86,7 @@ func runPdflatex(directory string, texFile string) error {
 func readFile(baseDir string, fileName string) ([]byte, error) {
 	dir, _ := os.Getwd()
 	path := filepath.Join(dir, baseDir, fileName)
-	bytes, err := ioutil.ReadFile(path)
+	bytes, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +97,7 @@ func fillData(templateDir string, texFileName string, obj interface{}) error {
 	dir, _ := os.Getwd()
 	templatePath := filepath.Join(dir, templateDir, texTemplate)
 
-	data, _ := ioutil.ReadFile(templatePath)
+	data, _ := os.ReadFile(templatePath)
 
 	tpl := template.Must(template.New("main").Delims("#(", ")#").Parse(string(data)))
 

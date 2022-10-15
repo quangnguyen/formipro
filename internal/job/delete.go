@@ -2,7 +2,6 @@ package job
 
 import (
 	"github.com/robfig/cron/v3"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -34,20 +33,24 @@ func loadParams() {
 }
 
 func deleteTmpDir() {
-	files, err := ioutil.ReadDir("tmp")
+	dirEntries, err := os.ReadDir("tmp")
 	if err != nil {
 		log.Println(err.Error())
 	}
 
 	now := time.Now()
 	deleted := 0
-	for _, file := range files {
-		if file.IsDir() && strings.HasSuffix(file.Name(), "processed") && file.ModTime().Before(now.Add(time.Duration(-1*timeToLiveSeconds))) {
-			err = os.RemoveAll(filepath.Join("tmp", file.Name()))
-			if err != nil {
-				log.Printf("Could not delete tmp folder '%s', error is '%s'\n", file.Name(), err.Error())
-			} else {
-				deleted++
+	for _, entry := range dirEntries {
+		if entry.IsDir() && strings.HasSuffix(entry.Name(), "processed") {
+			info, _ := entry.Info()
+
+			if info.ModTime().Before(now.Add(time.Duration(-1 * timeToLiveSeconds))) {
+				err = os.RemoveAll(filepath.Join("tmp", info.Name()))
+				if err != nil {
+					log.Printf("Could not delete tmp folder '%s', error is '%s'\n", info.Name(), err.Error())
+				} else {
+					deleted++
+				}
 			}
 		}
 	}

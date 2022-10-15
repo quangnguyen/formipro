@@ -11,13 +11,11 @@ func TestGeneratePdf(t *testing.T) {
 		templateID string
 		model      model.Model
 	}
-	tests := []struct {
+	var tests []struct {
 		name    string
 		args    args
 		want    []byte
 		wantErr bool
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -39,12 +37,10 @@ func Test_fillData(t *testing.T) {
 		texFile     string
 		obj         interface{}
 	}
-	tests := []struct {
+	var tests []struct {
 		name    string
 		args    args
 		wantErr bool
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -60,13 +56,11 @@ func Test_readFile(t *testing.T) {
 		baseDir  string
 		fileName string
 	}
-	tests := []struct {
+	var tests []struct {
 		name    string
 		args    args
 		want    []byte
 		wantErr bool
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -120,12 +114,10 @@ func Test_runPdflatex(t *testing.T) {
 		directory string
 		texFile   string
 	}
-	tests := []struct {
+	var tests []struct {
 		name    string
 		args    args
 		wantErr bool
-	}{
-		// TODO: Add test cases.
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

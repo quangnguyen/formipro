@@ -2,7 +2,7 @@ FROM pandoc/core:2.17.0 as pandoc-builder
 
 # Backend build ################################################################
 # https://hub.docker.com/_/golang
-FROM golang:1.17.6-alpine3.15 as backend-builder
+FROM golang:1.19.2-alpine3.16 as backend-builder
 
 RUN apk add --no-cache git
 WORKDIR /go/src/com.nguyenonline/formipro
@@ -11,7 +11,7 @@ RUN go get -v -t .
 RUN go build -o app
 
 # App image ####################################################################
-FROM nguyen99/alpine-latex:20220113133923
+FROM nguyen99/alpine-latex:20221013190916
 
 COPY --from=pandoc-builder \
   /usr/local/bin/pandoc \
@@ -31,6 +31,6 @@ COPY --from=backend-builder /go/src/com.nguyenonline/formipro/app .
 COPY assets assets
 RUN mkdir tmp
 
-EXPOSE 22222
+EXPOSE 8080
 
 CMD ["./app"]

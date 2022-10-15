@@ -11,14 +11,14 @@
 Start a docker container with following command:
 
 ```bash
-docker run -p 22222:22222 -d nguyen99/formipro:latest
+docker run -p 8080:8080 -d nguyen99/formipro:latest
 ```
 
-Open web browser with address http://localhost:22222 and go ahead.
+Open web browser with address http://localhost:8080 and go ahead.
 
 ## How to upgrade to new version
 
-Pull latest version of formipro
+Pull the latest version of formipro
 
 ```bash
 docker pull nguyen99/formipro:latest
