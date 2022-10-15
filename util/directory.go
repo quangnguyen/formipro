@@ -9,9 +9,11 @@ import (
 
 var digits = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890")
 
+const Mode0700 = 0700
+
 func RandDir() (string, error) {
 	dirName := time.Now().Format("20060102150405") + "_" + RandString(10)
-	err := os.Mkdir("tmp/"+dirName, 0700)
+	err := os.Mkdir("tmp/"+dirName, Mode0700)
 	if err != nil {
 		log.Printf("Could not create directory '%s', error is '%s'\n", dirName, err)
 		return "", err

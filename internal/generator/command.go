@@ -14,6 +14,8 @@ import (
 
 const texTemplate = "main.tmpl"
 
+const Mode0664 = 0644
+
 func PdfLatex(templateID string, m model.Model) ([]byte, error) {
 	newDirName, _ := util.RandDir()
 
@@ -71,7 +73,8 @@ func createFile(directoryName string, fileName string, bytes []byte) error {
 	if err != nil {
 		return err
 	}
-	err = os.WriteFile(attachmentFile.Name(), bytes, 0644)
+
+	err = os.WriteFile(attachmentFile.Name(), bytes, Mode0664)
 	return err
 }
 

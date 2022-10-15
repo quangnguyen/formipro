@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 )
 
+const Mode0755 = 0755
+
 func CopyFiles(srcFolder string, destFolder string) error {
 	files, err := os.ReadDir(srcFolder)
 	if err != nil {
@@ -29,7 +31,7 @@ func copyContent(sourcePath string, destinationPath string) error {
 		return errors.New("could not read source file")
 	}
 
-	err = os.WriteFile(filepath.Join(dir, destinationPath), source, 0755)
+	err = os.WriteFile(filepath.Join(dir, destinationPath), source, Mode0755)
 	if err != nil {
 		return errors.New("could not read destination file")
 	}
